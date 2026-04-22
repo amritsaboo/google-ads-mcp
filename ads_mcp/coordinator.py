@@ -21,6 +21,8 @@ of the server.
 
 import os
 from fastmcp import FastMCP
+from starlette.requests import Request
+from starlette.responses import JSONResponse
 from dotenv import load_dotenv
 
 # Load variables at the earliest possible moment
@@ -52,3 +54,8 @@ if _CLIENT_ID and _CLIENT_SECRET:
         mcp = FastMCP("Google Ads Server")
 else:
     mcp = FastMCP("Google Ads Server")
+
+
+@mcp.custom_route("/health", methods=["GET"])
+async def health(request: Request) -> JSONResponse:
+    return JSONResponse({"status": "ok"})
