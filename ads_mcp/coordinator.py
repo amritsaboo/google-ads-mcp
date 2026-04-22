@@ -21,7 +21,6 @@ of the server.
 
 import os
 from fastmcp import FastMCP
-from fastmcp.server.auth.providers.google import GoogleProvider
 from dotenv import load_dotenv
 
 # Load variables at the earliest possible moment
@@ -33,6 +32,7 @@ _BASE_URL = os.environ.get("GOOGLE_ADS_MCP_BASE_URL", "http://localhost:8000")
 
 if _CLIENT_ID and _CLIENT_SECRET:
     try:
+        from fastmcp.server.auth.providers.google import GoogleProvider
         auth = GoogleProvider(
             client_id=_CLIENT_ID,
             client_secret=_CLIENT_SECRET,
@@ -48,7 +48,7 @@ if _CLIENT_ID and _CLIENT_SECRET:
         print("INFO: OAuth initialized successfully")
     except Exception as e:
         print(f"ERROR: Failed to initialize OAuth provider: {e}")
-        print("WARNING: Starting without OAuth. Set credentials correctly to enable auth.")
+        print("WARNING: Starting without OAuth.")
         mcp = FastMCP("Google Ads Server")
 else:
     mcp = FastMCP("Google Ads Server")
