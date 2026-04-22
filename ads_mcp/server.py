@@ -30,15 +30,22 @@ from ads_mcp.resources import (
 
 
 import os
+from dotenv import load_dotenv
 
 
 def run_server() -> None:
+    load_dotenv()  # Load variables from .env file
     _CLIENT_ID = os.environ.get("GOOGLE_ADS_MCP_OAUTH_CLIENT_ID")
     _CLIENT_SECRET = os.environ.get("GOOGLE_ADS_MCP_OAUTH_CLIENT_SECRET")
 
+    print(f"DEBUG: Found Client ID: {'Yes' if _CLIENT_ID else 'No'}")
+    
+    port = int(os.environ.get("PORT", 8000))
     if _CLIENT_ID and _CLIENT_SECRET:
-        mcp.run(transport="streamable-http")
+        print(f"DEBUG: Starting in streamable-http mode on port {port}")
+        mcp.run(transport="streamable-http", host="0.0.0.0", port=port)
     else:
+        print("DEBUG: Starting in stdio mode (No credentials found)")
         mcp.run()
 
 

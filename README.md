@@ -288,6 +288,24 @@ How many active campaigns do I have for customer id 1234567890
 ```
 
 
+## Deployment
+
+### Deploy to Railway
+
+This server is configured for easy deployment on [Railway](https://railway.app).
+
+1.  **Fork this repository** to your GitHub account.
+2.  **Create a new Project** on Railway and select **Deploy from GitHub repo**.
+3.  **Configure Environment Variables**:
+    *   `GOOGLE_ADS_DEVELOPER_TOKEN`: Your Google Ads developer token.
+    *   `GOOGLE_PROJECT_ID`: Your Google Cloud project ID.
+    *   `GOOGLE_ADS_MCP_OAUTH_CLIENT_ID`: Your OAuth 2.0 Client ID.
+    *   `GOOGLE_ADS_MCP_OAUTH_CLIENT_SECRET`: Your OAuth 2.0 Client Secret.
+    *   `GOOGLE_ADS_LOGIN_CUSTOMER_ID`: (Optional) Manager account ID.
+4.  **Deployment**: Railway will automatically detect the `Dockerfile` and `railway.json` and start the server.
+
+Once deployed, your MCP endpoint will be available at `https://your-app-name.up.railway.app/mcp`.
+
 ## Contributing
 
 Contributions welcome! See the [Contributing Guide](CONTRIBUTING.md).

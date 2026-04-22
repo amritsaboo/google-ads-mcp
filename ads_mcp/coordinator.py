@@ -22,6 +22,10 @@ of the server.
 import os
 from fastmcp import FastMCP
 from fastmcp.server.auth.providers.google import GoogleProvider
+from dotenv import load_dotenv
+
+# Load variables at the earliest possible moment
+load_dotenv()
 
 _CLIENT_ID = os.environ.get("GOOGLE_ADS_MCP_OAUTH_CLIENT_ID")
 _CLIENT_SECRET = os.environ.get("GOOGLE_ADS_MCP_OAUTH_CLIENT_SECRET")
