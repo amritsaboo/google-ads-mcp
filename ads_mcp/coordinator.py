@@ -32,17 +32,23 @@ _CLIENT_SECRET = os.environ.get("GOOGLE_ADS_MCP_OAUTH_CLIENT_SECRET")
 _BASE_URL = os.environ.get("GOOGLE_ADS_MCP_BASE_URL", "http://localhost:8000")
 
 if _CLIENT_ID and _CLIENT_SECRET:
-    auth = GoogleProvider(
-        client_id=_CLIENT_ID,
-        client_secret=_CLIENT_SECRET,
-        base_url=_BASE_URL,
-        required_scopes=[
-            "openid",
-            "https://www.googleapis.com/auth/userinfo.email",
-            "https://www.googleapis.com/auth/userinfo.profile",
-            "https://www.googleapis.com/auth/adwords",
-        ],
-    )
-    mcp = FastMCP("Google Ads Server", auth=auth)
+    try:
+        auth = GoogleProvider(
+            client_id=_CLIENT_ID,
+            client_secret=_CLIENT_SECRET,
+            base_url=_BASE_URL,
+            required_scopes=[
+                "openid",
+                "https://www.googleapis.com/auth/userinfo.email",
+                "https://www.googleapis.com/auth/userinfo.profile",
+                "https://www.googleapis.com/auth/adwords",
+            ],
+        )
+        mcp = FastMCP("Google Ads Server", auth=auth)
+        print("INFO: OAuth initialized successfully")
+    except Exception as e:
+        print(f"ERROR: Failed to initialize OAuth provider: {e}")
+        print("WARNING: Starting without OAuth. Set credentials correctly to enable auth.")
+        mcp = FastMCP("Google Ads Server")
 else:
     mcp = FastMCP("Google Ads Server")
