@@ -41,11 +41,16 @@ def run_server() -> None:
     print(f"DEBUG: Found Client ID: {'Yes' if _CLIENT_ID else 'No'}")
     
     port = int(os.environ.get("PORT", 8000))
-    if _CLIENT_ID and _CLIENT_SECRET:
-        print(f"DEBUG: Starting in streamable-http mode on port {port}")
-        mcp.run(transport="streamable-http", host="0.0.0.0", port=port)
+    is_web_env = "PORT" in os.environ
+
+    if is_web_env or (_CLIENT_ID and _CLIENT_SECRET):
+        transport = "streamable-http"
+        print(f"DEBUG: Starting in {transport} mode on port {port}")
+        if not _CLIENT_ID or not _CLIENT_SECRET:
+            print("WARNING: Starting in HTTP mode without OAuth credentials.")
+        mcp.run(transport=transport, host="0.0.0.0", port=port)
     else:
-        print("DEBUG: Starting in stdio mode (No credentials found)")
+        print("DEBUG: Starting in stdio mode (No credentials found and no PORT set)")
         mcp.run()
 
 
